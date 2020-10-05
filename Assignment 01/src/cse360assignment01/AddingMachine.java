@@ -13,18 +13,23 @@ package cse360assignment01;
 public class AddingMachine {
 	//instance variables
 	private int total;
-	
+	private int temp; 
+	private String result;
+
+	//constructor which instantiates instance variables
 	public AddingMachine () {
 		total = 0;  // not needed - included for clarity
+		temp = 0;
+		result = "0";
 	}
-
+	
 	/**
 	 * This method is used to retrieve an integer value
 	 * @return values is 0
 	 */
 
 	public int getTotal () {
-		return 0;	//return value
+		return total;	//return value
 	}
 
 	/**
@@ -34,7 +39,9 @@ public class AddingMachine {
 	 */
 
 	public void add (int value) {
-
+		temp = total; //holds initial value of total before operation occurs
+		total += value;	//performs addition
+		toString(); //updates "memory" or operations performed
 	}
 
 	/**
@@ -44,7 +51,9 @@ public class AddingMachine {
 	 */
 
 	public void subtract (int value) {
-
+		temp = total; //holds initial value of total before operation occurs
+		total -= value;	//performs subtraction
+		toString();	//updates "memory" or operations performed
 	}
 
 	/**
@@ -53,8 +62,24 @@ public class AddingMachine {
 	 * @return value is an empty String
 	 */
 
-	public String toString () {
-		return "";	//return value
+	public String toString () 
+	{
+		//local variables
+		String sign = "";	//empty string
+		int value = 0;	//sets value to 0
+		//checks if subtraction was performed
+		if(temp > total) {
+			sign = "-";	//sets sign as subtraction
+			value = temp - total;	//determines absolute value of what the total was subtracted by
+		}
+		else {
+			sign = "+";	//sets sign as addition
+			value = total - temp; //determines how much was added to the total
+		}
+
+		result += " " + sign + " " + value + " "; //updates result string to include most recent operation (sign and value)
+
+		return result;	//returns String result
 	}
 
 	/**
@@ -64,6 +89,8 @@ public class AddingMachine {
 	 */
 
 	public void clear() {
+		total = 0;	//sets total to 0
+		result = "0";	//resets "memory" of the string which contained the addition/subtraction steps
 	}
 
 }
